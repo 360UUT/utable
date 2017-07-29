@@ -1,0 +1,1705 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <link href="http://zui.sexy/docs/css/zui.min.css" rel="stylesheet"/>
+    <link href="../dist/release/jquery.utable.css" rel="stylesheet"/>
+    <script src="//cdn.inner.com/static/common/js/plugins/jquery/jquery-1.10.2.min.js"></script>
+    <!--<script src="../vendor/jquery-2.1.4.js"></script>-->
+    <script src="../dist/release/jquery.utable.js"></script>
+    <!-- <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+     <script src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
+
+     <link href="../js/jquery.utable/jquery.utable.css" rel="stylesheet" />
+     <script src="../js/jquery.utable/jquery.utable.js"></script>-->
+
+    <title>表格插件例子大演练！！</title>
+</head>
+<body>
+<h1>
+    表格插件例子大演练！！
+</h1>
+
+<pre>
+    普通形态：不固定行列 FixedColumn:false
+    $("...").uTable("getRadioSelectedModel"); //获取选项
+    $("...").uTable("setRadioSelectedModel",17636); //设置主键为选上
+    $("...").uTable({canLoad:false}); //重新加载数据
+    $("...").uTable("reload",{...}); //重新加载数据
+    $("...").uTable("resetPageIndex"); //回到首页
+    $("...").uTable("clearItems"); //清空
+    $("...").uTable("getCheckedIds"); //获取选项
+    $("...").uTable("getCheckedItems"); //获取已选数据
+    $("...").uTable("setCheckedItems",[key1,key2]); //根据主键设置选项
+    $("...").uTable("loadDataByCondition",[]); //选项数组
+
+    不固定行列
+    $('#unfixTable').uTable({
+         ...
+         FixedColumn:false,
+         ..
+    });
+	$('#unfixTable').uTable({
+		...,
+		changeRadioButton:function(evt,model){
+			console.log(model);
+			// 获取变化选项时的选项
+		},
+        changeCheckboxButton:function(evt,model){
+            console.log(model);
+			// 获取变化选项时的选项
+        }
+	});
+
+
+	2017-3-21 新增分页事件
+	$(...).uTable({
+	  ...
+
+		beforePageChange:function(evt,model){
+            console.log("fenye");
+			console.log(model);
+        },
+		...
+	});
+
+
+</pre>
+
+<pre>
+      2017-3-22 新增自定义表格尾部信息
+    $(...).uTable({
+	  ...
+		   FooterOptions: {
+            Rows: [
+                {
+                    RowType: &quot;合计&quot;,
+                    RowTypeNameIndex: 2,
+                    Cells: [
+                        {
+                            CellIndex: 8,
+                            // data 为请求回来的数据, cell为当前单元格Dom
+                            Func: function (data, cell) {
+                             //   console.log(data);
+                                var total=0;
+                                for(var i=0;i&lt;data.Result.Items.length;i++){
+                                    total+=data.Result.Items[i].money;
+                                }
+
+                                return total;
+                            }
+                        }
+                    ]
+                },
+                {
+                    RowType: &quot;平均数&quot;,
+                    RowTypeNameIndex: 2,
+                    Cells: [
+                        {
+                            CellIndex: 8,
+                            // data 为请求回来的数据, cell为当前单元格Dom
+                            Func: function (data, cell) {
+                                var total=0;
+                                for(var i=0;i&lt;data.Result.Items.length;i++){
+                                    total+=data.Result.Items[i].money;
+                                }
+
+                                return total/data.Result.Items.length;
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+		...
+	});
+
+
+</pre>
+<pre>
+    2017/3/23 添加分页控件无数据时的提示
+	$(...).uTable({
+	  ...
+        showNoData:true, // 是否显示无数据时的提示，默认 true
+        showNoDataText:'暂无更多数据了', // 是否显示无数据时的提示文本，默认 暂无更多数据了
+		...
+	});
+</pre>
+<div id="unfixTable" style="width: 80%;"></div>
+
+<div id="testTable" style="width: 100%;">
+    <div class="utable" style="position: relative; max-width: 1422px;">
+        <div style="position: relative; width: 100%; overflow: hidden; padding-bottom: 10px;">
+            <div data-id="tableDiv_title" class="tb-head-wrapper fixed"
+                 style="width: auto;">
+                <div style=" overflow: hidden; padding-left: 426px; margin-right: 177px;">
+                    <table border="0" class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th class="fixedLeftColumn"
+                                style="width: 30px; min-width: 30px; max-width: 30px; border-left: 0px; text-align: center; border-bottom: 0px; left: -1px;">
+                                <input type="checkbox" name="checkAll" class="checkAll"></th>
+                            <th class="rowIndex fixedLeftColumn"
+                                style="border-bottom: 0px; left: 28px; width: 50px; min-width: 50px; max-width: 50px;">序号
+                            </th>
+                            <th title="名称" class="fixedLeftColumn"
+                                style="border-bottom: 0px; text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; left: 77px; width: 350px; min-width: 350px; max-width: 350px;">
+                                名称
+                            </th>
+                            <th title="编号"
+                                style="border-bottom: 0px; text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 140px; min-width: 140px; max-width: 140px;">
+                                编号
+                            </th>
+                            <th title="自定义类别"
+                                style="border-bottom: 0px; text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 100px; min-width: 100px; max-width: 100px;">
+                                自定义类别
+                            </th>
+                            <th title="线路类别"
+                                style="border-bottom: 0px; text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 100px; min-width: 100px; max-width: 100px;">
+                                线路类别
+                            </th>
+                            <th title="团队类型"
+                                style="border-bottom: 0px; text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px;">
+                                团队类型
+                            </th>
+                            <th title="出发地"
+                                style="border-bottom: 0px; text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px;">
+                                出发地
+                            </th>
+                            <th title="创建人"
+                                style="border-bottom: 0px; text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px;">
+                                创建人
+                            </th>
+                            <th title="更新人"
+                                style="border-bottom: 0px; text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px;">
+                                更新人
+                            </th>
+                            <th title="更新时间"
+                                style="border-bottom: 0px; text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px;">
+                                更新时间
+                            </th>
+                            <th title="上下架"
+                                style="border-bottom: 0px; text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px;">
+                                上下架
+                            </th>
+                            <th title="状态" class="fixedRightColumn"
+                                style="border-bottom: 0px; text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; right: 100px; width: 80px; min-width: 80px; max-width: 80px;">
+                                状态
+                            </th>
+                            <th title="操作" class="fixedRightColumn"
+                                style="border-bottom: 0px; text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; right: 0px; width: 100px; min-width: 100px; max-width: 100px; border-left: 0px;">
+                                操作
+                            </th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+
+            </div>
+            <div class="outerWrapper" style="position: relative;">
+                <div class="tb-body-wrapper"
+                     style="overflow: hidden; position: relative; width: 100%; border-top: 1px solid rgb(204, 204, 204); border-bottom: 1px solid rgb(204, 204, 204);">
+                    <div class="positionDiv"
+                         style="width: auto; overflow: hidden; padding-left: 426px; margin-right: 177px;">
+                        <table border="0" cellpadding="0" cellspacing="0" class="table table-bordered">
+                            <tbody>
+                            <tr data-id="be2cf2e8e1964d67a66d2b27d7c7804b">
+                                <td class="checkboxField fixedLeftColumn"
+                                    style="width: 30px; min-width: 30px; max-width: 30px; left: -1px; height: 31px;">
+                                    <input type="checkbox" name="checkbox" class="selectBtn"
+                                           data-id="be2cf2e8e1964d67a66d2b27d7c7804b"
+                                           value="be2cf2e8e1964d67a66d2b27d7c7804b"></td>
+                                <td class="rowIndex fixedLeftColumn"
+                                    style="left: 28px; width: 50px; min-width: 50px; max-width: 50px; height: 31px;">1
+                                </td>
+                                <td class=" fixedLeftColumn"
+                                    style="left: 77px; width: 350px; min-width: 350px; max-width: 350px; height: 31px;">
+                                    <a href="/line/detail/be2cf2e8e1964d67a66d2b27d7c7804b" title="广州2日游"
+                                       paras="LineGuid">广州2日游</a></td>
+                                <td title="ALOZ201704100024"
+                                    style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 140px; min-width: 140px; max-width: 140px; height: 30px; vertical-align: top;">
+                                    ALOZ201704100024
+                                </td>
+                                <td title="欧洲游"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 100px; min-width: 100px; max-width: 100px; height: 30px; vertical-align: top;">
+                                    欧洲游
+                                </td>
+                                <td title="国内游"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 100px; min-width: 100px; max-width: 100px; height: 30px; vertical-align: top;">
+                                    国内游
+                                </td>
+                                <td title="包团"
+                                    style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    包团
+                                </td>
+                                <td title="大兴"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    大兴
+                                </td>
+                                <td title="陈雪华"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    陈雪华
+                                </td>
+                                <td title="miniluo"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    miniluo
+                                </td>
+                                <td title="17-04-21" format="yy-MM-dd"
+                                    style="text-align: center; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    17-04-21
+                                </td>
+                                <td title="false"
+                                    style="text-align: center; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    false
+                                </td>
+                                <td title="正常" class=" fixedRightColumn"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; right: 100px; width: 80px; min-width: 80px; max-width: 80px; height: 31px;">
+                                    正常
+                                </td>
+                                <td class=" fixedRightColumn"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; right: 0px; width: 100px; min-width: 100px; max-width: 100px; border-left: 0px; height: 31px;">
+                                    <a class=" clickEvent btn btn-sm" href="javascript:void(0);" title="上架">上架</a><a
+                                        class=" clickEvent btn btn-sm" href="javascript:void(0);" title="下架">下架</a></td>
+                            </tr>
+                            <tr data-id="cf8429655e9243bb9842d17d8571c3f8">
+                                <td class="checkboxField fixedLeftColumn"
+                                    style="width: 30px; min-width: 30px; max-width: 30px; left: -1px; height: 31px;">
+                                    <input type="checkbox" name="checkbox" class="selectBtn"
+                                           data-id="cf8429655e9243bb9842d17d8571c3f8"
+                                           value="cf8429655e9243bb9842d17d8571c3f8"></td>
+                                <td class="rowIndex fixedLeftColumn"
+                                    style="left: 28px; width: 50px; min-width: 50px; max-width: 50px; height: 31px;">2
+                                </td>
+                                <td class=" fixedLeftColumn"
+                                    style="left: 77px; width: 350px; min-width: 350px; max-width: 350px; height: 31px;">
+                                    <a href="/line/detail/cf8429655e9243bb9842d17d8571c3f8" title="测试编辑线路获取渠道商报错"
+                                       paras="LineGuid">测试编辑线路获取渠道商报错</a></td>
+                                <td title="AC1703100004"
+                                    style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 140px; min-width: 140px; max-width: 140px; height: 30px; vertical-align: top;">
+                                    AC1703100004
+                                </td>
+                                <td title="产品中心"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 100px; min-width: 100px; max-width: 100px; height: 30px; vertical-align: top;">
+                                    产品中心
+                                </td>
+                                <td title="出境游"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 100px; min-width: 100px; max-width: 100px; height: 30px; vertical-align: top;">
+                                    出境游
+                                </td>
+                                <td title="散拼-拼"
+                                    style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    散拼-拼
+                                </td>
+                                <td title="阳朔"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    阳朔
+                                </td>
+                                <td title="陈雪华"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    陈雪华
+                                </td>
+                                <td title="miniluo"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    miniluo
+                                </td>
+                                <td title="17-04-17" format="yy-MM-dd"
+                                    style="text-align: center; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    17-04-17
+                                </td>
+                                <td title="false"
+                                    style="text-align: center; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    false
+                                </td>
+                                <td title="正常" class=" fixedRightColumn"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; right: 100px; width: 80px; min-width: 80px; max-width: 80px; height: 31px;">
+                                    正常
+                                </td>
+                                <td class=" fixedRightColumn"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; right: 0px; width: 100px; min-width: 100px; max-width: 100px; border-left: 0px; height: 31px;">
+                                    <a class=" clickEvent btn btn-sm" href="javascript:void(0);" title="上架">上架</a><a
+                                        class=" clickEvent btn btn-sm" href="javascript:void(0);" title="下架">下架</a></td>
+                            </tr>
+                            <tr data-id="8ba21fa9e98943e88d196546f397bef4">
+                                <td class="checkboxField fixedLeftColumn"
+                                    style="width: 30px; min-width: 30px; max-width: 30px; left: -1px; height: 31px;">
+                                    <input type="checkbox" name="checkbox" class="selectBtn"
+                                           data-id="8ba21fa9e98943e88d196546f397bef4"
+                                           value="8ba21fa9e98943e88d196546f397bef4"></td>
+                                <td class="rowIndex fixedLeftColumn"
+                                    style="left: 28px; width: 50px; min-width: 50px; max-width: 50px; height: 31px;">3
+                                </td>
+                                <td class=" fixedLeftColumn"
+                                    style="left: 77px; width: 350px; min-width: 350px; max-width: 350px; height: 31px;">
+                                    <a href="/line/detail/8ba21fa9e98943e88d196546f397bef4" title="广州2日游"
+                                       paras="LineGuid">广州2日游</a></td>
+                                <td title="ALOZ201704060022"
+                                    style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 140px; min-width: 140px; max-width: 140px; height: 30px; vertical-align: top;">
+                                    ALOZ201704060022
+                                </td>
+                                <td title="欧洲游"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 100px; min-width: 100px; max-width: 100px; height: 30px; vertical-align: top;">
+                                    欧洲游
+                                </td>
+                                <td title="国内游"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 100px; min-width: 100px; max-width: 100px; height: 30px; vertical-align: top;">
+                                    国内游
+                                </td>
+                                <td title="包团"
+                                    style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    包团
+                                </td>
+                                <td title="大兴"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    大兴
+                                </td>
+                                <td title="陈雪华"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    陈雪华
+                                </td>
+                                <td title="miniluo"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    miniluo
+                                </td>
+                                <td title="17-04-11" format="yy-MM-dd"
+                                    style="text-align: center; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    17-04-11
+                                </td>
+                                <td title="false"
+                                    style="text-align: center; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    false
+                                </td>
+                                <td title="正常" class=" fixedRightColumn"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; right: 100px; width: 80px; min-width: 80px; max-width: 80px; height: 31px;">
+                                    正常
+                                </td>
+                                <td class=" fixedRightColumn"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; right: 0px; width: 100px; min-width: 100px; max-width: 100px; border-left: 0px; height: 31px;">
+                                    <a class=" clickEvent btn btn-sm" href="javascript:void(0);" title="上架">上架</a><a
+                                        class=" clickEvent btn btn-sm" href="javascript:void(0);" title="下架">下架</a></td>
+                            </tr>
+                            <tr data-id="b1fd9122d3bb4dfb84596cced2f11303">
+                                <td class="checkboxField fixedLeftColumn"
+                                    style="width: 30px; min-width: 30px; max-width: 30px; left: -1px; height: 31px;">
+                                    <input type="checkbox" name="checkbox" class="selectBtn"
+                                           data-id="b1fd9122d3bb4dfb84596cced2f11303"
+                                           value="b1fd9122d3bb4dfb84596cced2f11303"></td>
+                                <td class="rowIndex fixedLeftColumn"
+                                    style="left: 28px; width: 50px; min-width: 50px; max-width: 50px; height: 31px;">4
+                                </td>
+                                <td class=" fixedLeftColumn"
+                                    style="left: 77px; width: 350px; min-width: 350px; max-width: 350px; height: 31px;">
+                                    <a href="/line/detail/b1fd9122d3bb4dfb84596cced2f11303" title="广州2日游-测试对接流程"
+                                       paras="LineGuid">广州2日游-测试对接流程</a></td>
+                                <td title="ALOZ201704110025"
+                                    style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 140px; min-width: 140px; max-width: 140px; height: 30px; vertical-align: top;">
+                                    ALOZ201704110025
+                                </td>
+                                <td title="欧洲游"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 100px; min-width: 100px; max-width: 100px; height: 30px; vertical-align: top;">
+                                    欧洲游
+                                </td>
+                                <td title="国内游"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 100px; min-width: 100px; max-width: 100px; height: 30px; vertical-align: top;">
+                                    国内游
+                                </td>
+                                <td title="包团"
+                                    style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    包团
+                                </td>
+                                <td title="大兴"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    大兴
+                                </td>
+                                <td title="miniluo"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    miniluo
+                                </td>
+                                <td title="李政鸿"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    李政鸿
+                                </td>
+                                <td title="17-04-11" format="yy-MM-dd"
+                                    style="text-align: center; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    17-04-11
+                                </td>
+                                <td title="true"
+                                    style="text-align: center; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    true
+                                </td>
+                                <td class=" fixedRightColumn"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; right: 100px; width: 80px; min-width: 80px; max-width: 80px; height: 31px;"></td>
+                                <td class=" fixedRightColumn"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; right: 0px; width: 100px; min-width: 100px; max-width: 100px; border-left: 0px; height: 31px;">
+                                    <a class=" clickEvent btn btn-sm" href="javascript:void(0);" title="上架">上架</a><a
+                                        class=" clickEvent btn btn-sm" href="javascript:void(0);" title="下架">下架</a></td>
+                            </tr>
+                            <tr data-id="3eae51fbfa3c4db0a2402a252eff7413">
+                                <td class="checkboxField fixedLeftColumn"
+                                    style="width: 30px; min-width: 30px; max-width: 30px; left: -1px; height: 31px;">
+                                    <input type="checkbox" name="checkbox" class="selectBtn"
+                                           data-id="3eae51fbfa3c4db0a2402a252eff7413"
+                                           value="3eae51fbfa3c4db0a2402a252eff7413"></td>
+                                <td class="rowIndex fixedLeftColumn"
+                                    style="left: 28px; width: 50px; min-width: 50px; max-width: 50px; height: 31px;">5
+                                </td>
+                                <td class=" fixedLeftColumn"
+                                    style="left: 77px; width: 350px; min-width: 350px; max-width: 350px; height: 31px;">
+                                    <a href="/line/detail/3eae51fbfa3c4db0a2402a252eff7413" title="图片插件测试"
+                                       paras="LineGuid">图片插件测试</a></td>
+                                <td title="ALGWY20170330017"
+                                    style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 140px; min-width: 140px; max-width: 140px; height: 30px; vertical-align: top;">
+                                    ALGWY20170330017
+                                </td>
+                                <td title="国外游"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 100px; min-width: 100px; max-width: 100px; height: 30px; vertical-align: top;">
+                                    国外游
+                                </td>
+                                <td title="出境游"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 100px; min-width: 100px; max-width: 100px; height: 30px; vertical-align: top;">
+                                    出境游
+                                </td>
+                                <td title="包团"
+                                    style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    包团
+                                </td>
+                                <td title="广州"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    广州
+                                </td>
+                                <td title="陈雪华"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    陈雪华
+                                </td>
+                                <td title="陈雪华"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    陈雪华
+                                </td>
+                                <td title="17-04-10" format="yy-MM-dd"
+                                    style="text-align: center; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    17-04-10
+                                </td>
+                                <td title="false"
+                                    style="text-align: center; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    false
+                                </td>
+                                <td title="正常" class=" fixedRightColumn"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; right: 100px; width: 80px; min-width: 80px; max-width: 80px; height: 31px;">
+                                    正常
+                                </td>
+                                <td class=" fixedRightColumn"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; right: 0px; width: 100px; min-width: 100px; max-width: 100px; border-left: 0px; height: 31px;">
+                                    <a class=" clickEvent btn btn-sm" href="javascript:void(0);" title="上架">上架</a><a
+                                        class=" clickEvent btn btn-sm" href="javascript:void(0);" title="下架">下架</a></td>
+                            </tr>
+                            <tr data-id="580b4b64a679430cabc6a72301286377">
+                                <td class="checkboxField fixedLeftColumn"
+                                    style="width: 30px; min-width: 30px; max-width: 30px; left: -1px; height: 31px;">
+                                    <input type="checkbox" name="checkbox" class="selectBtn"
+                                           data-id="580b4b64a679430cabc6a72301286377"
+                                           value="580b4b64a679430cabc6a72301286377"></td>
+                                <td class="rowIndex fixedLeftColumn"
+                                    style="left: 28px; width: 50px; min-width: 50px; max-width: 50px; height: 31px;">6
+                                </td>
+                                <td class=" fixedLeftColumn"
+                                    style="left: 77px; width: 350px; min-width: 350px; max-width: 350px; height: 31px;">
+                                    <a href="/line/detail/580b4b64a679430cabc6a72301286377"
+                                       title="广州2日游-开发测试用例，切勿删，违者请开发部唱K" paras="LineGuid">广州2日游-开发测试用例，切勿删，违者请开发部唱K</a>
+                                </td>
+                                <td title="GZ1702230001"
+                                    style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 140px; min-width: 140px; max-width: 140px; height: 30px; vertical-align: top;">
+                                    GZ1702230001
+                                </td>
+                                <td title="产品中心"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 100px; min-width: 100px; max-width: 100px; height: 30px; vertical-align: top;">
+                                    产品中心
+                                </td>
+                                <td title="国内游"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 100px; min-width: 100px; max-width: 100px; height: 30px; vertical-align: top;">
+                                    国内游
+                                </td>
+                                <td title="包团"
+                                    style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    包团
+                                </td>
+                                <td title="大兴"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    大兴
+                                </td>
+                                <td title="miniluo"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    miniluo
+                                </td>
+                                <td title="miniluo"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    miniluo
+                                </td>
+                                <td title="17-04-07" format="yy-MM-dd"
+                                    style="text-align: center; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    17-04-07
+                                </td>
+                                <td title="true"
+                                    style="text-align: center; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    true
+                                </td>
+                                <td class=" fixedRightColumn"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; right: 100px; width: 80px; min-width: 80px; max-width: 80px; height: 31px;"></td>
+                                <td class=" fixedRightColumn"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; right: 0px; width: 100px; min-width: 100px; max-width: 100px; border-left: 0px; height: 31px;">
+                                    <a class=" clickEvent btn btn-sm" href="javascript:void(0);" title="上架">上架</a><a
+                                        class=" clickEvent btn btn-sm" href="javascript:void(0);" title="下架">下架</a></td>
+                            </tr>
+                            <tr data-id="8a70a7d5ea914d0f8eeab6d4eb3a645d">
+                                <td class="checkboxField fixedLeftColumn"
+                                    style="width: 30px; min-width: 30px; max-width: 30px; left: -1px; height: 31px;">
+                                    <input type="checkbox" name="checkbox" class="selectBtn"
+                                           data-id="8a70a7d5ea914d0f8eeab6d4eb3a645d"
+                                           value="8a70a7d5ea914d0f8eeab6d4eb3a645d"></td>
+                                <td class="rowIndex fixedLeftColumn"
+                                    style="left: 28px; width: 50px; min-width: 50px; max-width: 50px; height: 31px;">7
+                                </td>
+                                <td class=" fixedLeftColumn"
+                                    style="left: 77px; width: 350px; min-width: 350px; max-width: 350px; height: 31px;">
+                                    <a href="/line/detail/8a70a7d5ea914d0f8eeab6d4eb3a645d" title="图片插件测试"
+                                       paras="LineGuid">图片插件测试</a></td>
+                                <td title="GWY1703170012"
+                                    style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 140px; min-width: 140px; max-width: 140px; height: 30px; vertical-align: top;">
+                                    GWY1703170012
+                                </td>
+                                <td title="国外游"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 100px; min-width: 100px; max-width: 100px; height: 30px; vertical-align: top;">
+                                    国外游
+                                </td>
+                                <td title="出境游"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 100px; min-width: 100px; max-width: 100px; height: 30px; vertical-align: top;">
+                                    出境游
+                                </td>
+                                <td title="包团"
+                                    style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    包团
+                                </td>
+                                <td title="广州"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    广州
+                                </td>
+                                <td title="陈雪华"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    陈雪华
+                                </td>
+                                <td title="miniluo"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    miniluo
+                                </td>
+                                <td title="17-04-06" format="yy-MM-dd"
+                                    style="text-align: center; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    17-04-06
+                                </td>
+                                <td title="false"
+                                    style="text-align: center; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    false
+                                </td>
+                                <td title="正常" class=" fixedRightColumn"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; right: 100px; width: 80px; min-width: 80px; max-width: 80px; height: 31px;">
+                                    正常
+                                </td>
+                                <td class=" fixedRightColumn"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; right: 0px; width: 100px; min-width: 100px; max-width: 100px; border-left: 0px; height: 31px;">
+                                    <a class=" clickEvent btn btn-sm" href="javascript:void(0);" title="上架">上架</a><a
+                                        class=" clickEvent btn btn-sm" href="javascript:void(0);" title="下架">下架</a></td>
+                            </tr>
+                            <tr data-id="7497786ccf324f43ba239863f69e367d">
+                                <td class="checkboxField fixedLeftColumn"
+                                    style="width: 30px; min-width: 30px; max-width: 30px; left: -1px; height: 31px;">
+                                    <input type="checkbox" name="checkbox" class="selectBtn"
+                                           data-id="7497786ccf324f43ba239863f69e367d"
+                                           value="7497786ccf324f43ba239863f69e367d"></td>
+                                <td class="rowIndex fixedLeftColumn"
+                                    style="left: 28px; width: 50px; min-width: 50px; max-width: 50px; height: 31px;">8
+                                </td>
+                                <td class=" fixedLeftColumn"
+                                    style="left: 77px; width: 350px; min-width: 350px; max-width: 350px; height: 31px;">
+                                    <a href="/line/detail/7497786ccf324f43ba239863f69e367d" title="图片插件测试"
+                                       paras="LineGuid">图片插件测试</a></td>
+                                <td title="ALGWY201704060023"
+                                    style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 140px; min-width: 140px; max-width: 140px; height: 30px; vertical-align: top;">
+                                    ALGWY201704060023
+                                </td>
+                                <td title="国外游"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 100px; min-width: 100px; max-width: 100px; height: 30px; vertical-align: top;">
+                                    国外游
+                                </td>
+                                <td title="出境游"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 100px; min-width: 100px; max-width: 100px; height: 30px; vertical-align: top;">
+                                    出境游
+                                </td>
+                                <td title="包团"
+                                    style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    包团
+                                </td>
+                                <td title="广州"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    广州
+                                </td>
+                                <td title="陈雪华"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    陈雪华
+                                </td>
+                                <td title="陈雪华"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    陈雪华
+                                </td>
+                                <td title="17-04-06" format="yy-MM-dd"
+                                    style="text-align: center; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    17-04-06
+                                </td>
+                                <td title="false"
+                                    style="text-align: center; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    false
+                                </td>
+                                <td title="正常" class=" fixedRightColumn"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; right: 100px; width: 80px; min-width: 80px; max-width: 80px; height: 31px;">
+                                    正常
+                                </td>
+                                <td class=" fixedRightColumn"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; right: 0px; width: 100px; min-width: 100px; max-width: 100px; border-left: 0px; height: 31px;">
+                                    <a class=" clickEvent btn btn-sm" href="javascript:void(0);" title="上架">上架</a><a
+                                        class=" clickEvent btn btn-sm" href="javascript:void(0);" title="下架">下架</a></td>
+                            </tr>
+                            <tr data-id="6fbd64a0e41a43639ef594c7d7456b9a">
+                                <td class="checkboxField fixedLeftColumn"
+                                    style="width: 30px; min-width: 30px; max-width: 30px; left: -1px; height: 31px;">
+                                    <input type="checkbox" name="checkbox" class="selectBtn"
+                                           data-id="6fbd64a0e41a43639ef594c7d7456b9a"
+                                           value="6fbd64a0e41a43639ef594c7d7456b9a"></td>
+                                <td class="rowIndex fixedLeftColumn"
+                                    style="left: 28px; width: 50px; min-width: 50px; max-width: 50px; height: 31px;">9
+                                </td>
+                                <td class=" fixedLeftColumn"
+                                    style="left: 77px; width: 350px; min-width: 350px; max-width: 350px; height: 31px;">
+                                    <a href="/line/detail/6fbd64a0e41a43639ef594c7d7456b9a" title="图片插件测试"
+                                       paras="LineGuid">图片插件测试</a></td>
+                                <td title="ALGWY20170330014"
+                                    style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 140px; min-width: 140px; max-width: 140px; height: 30px; vertical-align: top;">
+                                    ALGWY20170330014
+                                </td>
+                                <td title="国外游"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 100px; min-width: 100px; max-width: 100px; height: 30px; vertical-align: top;">
+                                    国外游
+                                </td>
+                                <td title="出境游"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 100px; min-width: 100px; max-width: 100px; height: 30px; vertical-align: top;">
+                                    出境游
+                                </td>
+                                <td title="包团"
+                                    style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    包团
+                                </td>
+                                <td title="广州"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    广州
+                                </td>
+                                <td title="陈雪华"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    陈雪华
+                                </td>
+                                <td title="陈雪华"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    陈雪华
+                                </td>
+                                <td title="17-03-31" format="yy-MM-dd"
+                                    style="text-align: center; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    17-03-31
+                                </td>
+                                <td title="false"
+                                    style="text-align: center; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    false
+                                </td>
+                                <td title="正常" class=" fixedRightColumn"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; right: 100px; width: 80px; min-width: 80px; max-width: 80px; height: 31px;">
+                                    正常
+                                </td>
+                                <td class=" fixedRightColumn"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; right: 0px; width: 100px; min-width: 100px; max-width: 100px; border-left: 0px; height: 31px;">
+                                    <a class=" clickEvent btn btn-sm" href="javascript:void(0);" title="上架">上架</a><a
+                                        class=" clickEvent btn btn-sm" href="javascript:void(0);" title="下架">下架</a></td>
+                            </tr>
+                            <tr data-id="958ff3c8b3a547c28dcd779decbc0f9a">
+                                <td class="checkboxField fixedLeftColumn"
+                                    style="width: 30px; min-width: 30px; max-width: 30px; left: -1px; height: 31px;">
+                                    <input type="checkbox" name="checkbox" class="selectBtn"
+                                           data-id="958ff3c8b3a547c28dcd779decbc0f9a"
+                                           value="958ff3c8b3a547c28dcd779decbc0f9a"></td>
+                                <td class="rowIndex fixedLeftColumn"
+                                    style="left: 28px; width: 50px; min-width: 50px; max-width: 50px; height: 31px;">10
+                                </td>
+                                <td class=" fixedLeftColumn"
+                                    style="left: 77px; width: 350px; min-width: 350px; max-width: 350px; height: 31px;">
+                                    <a href="/line/detail/958ff3c8b3a547c28dcd779decbc0f9a" title="图片插件测试"
+                                       paras="LineGuid">图片插件测试</a></td>
+                                <td title="ALGWY20170330013"
+                                    style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 140px; min-width: 140px; max-width: 140px; height: 30px; vertical-align: top;">
+                                    ALGWY20170330013
+                                </td>
+                                <td title="国外游"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 100px; min-width: 100px; max-width: 100px; height: 30px; vertical-align: top;">
+                                    国外游
+                                </td>
+                                <td title="出境游"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 100px; min-width: 100px; max-width: 100px; height: 30px; vertical-align: top;">
+                                    出境游
+                                </td>
+                                <td title="包团"
+                                    style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    包团
+                                </td>
+                                <td title="广州"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    广州
+                                </td>
+                                <td title="陈雪华"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    陈雪华
+                                </td>
+                                <td title="陈雪华"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    陈雪华
+                                </td>
+                                <td title="17-03-29" format="yy-MM-dd"
+                                    style="text-align: center; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    17-03-29
+                                </td>
+                                <td title="false"
+                                    style="text-align: center; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    false
+                                </td>
+                                <td title="正常" class=" fixedRightColumn"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; right: 100px; width: 80px; min-width: 80px; max-width: 80px; height: 31px;">
+                                    正常
+                                </td>
+                                <td class=" fixedRightColumn"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; right: 0px; width: 100px; min-width: 100px; max-width: 100px; border-left: 0px; height: 31px;">
+                                    <a class=" clickEvent btn btn-sm" href="javascript:void(0);" title="上架">上架</a><a
+                                        class=" clickEvent btn btn-sm" href="javascript:void(0);" title="下架">下架</a></td>
+                            </tr>
+                            <tr data-id="4fc13d1301a047dbaa3726d4d2c232b1">
+                                <td class="checkboxField fixedLeftColumn"
+                                    style="width: 30px; min-width: 30px; max-width: 30px; left: -1px; height: 31px;">
+                                    <input type="checkbox" name="checkbox" class="selectBtn"
+                                           data-id="4fc13d1301a047dbaa3726d4d2c232b1"
+                                           value="4fc13d1301a047dbaa3726d4d2c232b1"></td>
+                                <td class="rowIndex fixedLeftColumn"
+                                    style="left: 28px; width: 50px; min-width: 50px; max-width: 50px; height: 31px;">11
+                                </td>
+                                <td class=" fixedLeftColumn"
+                                    style="left: 77px; width: 350px; min-width: 350px; max-width: 350px; height: 31px;">
+                                    <a href="/line/detail/4fc13d1301a047dbaa3726d4d2c232b1" title="图片插件测试"
+                                       paras="LineGuid">图片插件测试</a></td>
+                                <td title="ALGWY20170330021"
+                                    style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 140px; min-width: 140px; max-width: 140px; height: 30px; vertical-align: top;">
+                                    ALGWY20170330021
+                                </td>
+                                <td title="国外游"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 100px; min-width: 100px; max-width: 100px; height: 30px; vertical-align: top;">
+                                    国外游
+                                </td>
+                                <td title="出境游"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 100px; min-width: 100px; max-width: 100px; height: 30px; vertical-align: top;">
+                                    出境游
+                                </td>
+                                <td title="包团"
+                                    style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    包团
+                                </td>
+                                <td title="广州"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    广州
+                                </td>
+                                <td title="陈雪华"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    陈雪华
+                                </td>
+                                <td title="陈雪华"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    陈雪华
+                                </td>
+                                <td title="17-03-29" format="yy-MM-dd"
+                                    style="text-align: center; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    17-03-29
+                                </td>
+                                <td title="false"
+                                    style="text-align: center; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    false
+                                </td>
+                                <td title="正常" class=" fixedRightColumn"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; right: 100px; width: 80px; min-width: 80px; max-width: 80px; height: 31px;">
+                                    正常
+                                </td>
+                                <td class=" fixedRightColumn"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; right: 0px; width: 100px; min-width: 100px; max-width: 100px; border-left: 0px; height: 31px;">
+                                    <a class=" clickEvent btn btn-sm" href="javascript:void(0);" title="上架">上架</a><a
+                                        class=" clickEvent btn btn-sm" href="javascript:void(0);" title="下架">下架</a></td>
+                            </tr>
+                            <tr data-id="0d7b383a65c140fca312c5f185ac0cb3">
+                                <td class="checkboxField fixedLeftColumn"
+                                    style="width: 30px; min-width: 30px; max-width: 30px; left: -1px; height: 31px;">
+                                    <input type="checkbox" name="checkbox" class="selectBtn"
+                                           data-id="0d7b383a65c140fca312c5f185ac0cb3"
+                                           value="0d7b383a65c140fca312c5f185ac0cb3"></td>
+                                <td class="rowIndex fixedLeftColumn"
+                                    style="left: 28px; width: 50px; min-width: 50px; max-width: 50px; height: 31px;">12
+                                </td>
+                                <td class=" fixedLeftColumn"
+                                    style="left: 77px; width: 350px; min-width: 350px; max-width: 350px; height: 31px;">
+                                    <a href="/line/detail/0d7b383a65c140fca312c5f185ac0cb3" title="图片插件测试"
+                                       paras="LineGuid">图片插件测试</a></td>
+                                <td title="ALGWY20170330019"
+                                    style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 140px; min-width: 140px; max-width: 140px; height: 30px; vertical-align: top;">
+                                    ALGWY20170330019
+                                </td>
+                                <td title="国外游"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 100px; min-width: 100px; max-width: 100px; height: 30px; vertical-align: top;">
+                                    国外游
+                                </td>
+                                <td title="出境游"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 100px; min-width: 100px; max-width: 100px; height: 30px; vertical-align: top;">
+                                    出境游
+                                </td>
+                                <td title="包团"
+                                    style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    包团
+                                </td>
+                                <td title="广州"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    广州
+                                </td>
+                                <td title="陈雪华"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    陈雪华
+                                </td>
+                                <td title="陈雪华"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    陈雪华
+                                </td>
+                                <td title="17-03-29" format="yy-MM-dd"
+                                    style="text-align: center; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    17-03-29
+                                </td>
+                                <td title="false"
+                                    style="text-align: center; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    false
+                                </td>
+                                <td title="正常" class=" fixedRightColumn"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; right: 100px; width: 80px; min-width: 80px; max-width: 80px; height: 31px;">
+                                    正常
+                                </td>
+                                <td class=" fixedRightColumn"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; right: 0px; width: 100px; min-width: 100px; max-width: 100px; border-left: 0px; height: 31px;">
+                                    <a class=" clickEvent btn btn-sm" href="javascript:void(0);" title="上架">上架</a><a
+                                        class=" clickEvent btn btn-sm" href="javascript:void(0);" title="下架">下架</a></td>
+                            </tr>
+                            <tr data-id="b3a93a036a154464acef7479cfa48384">
+                                <td class="checkboxField fixedLeftColumn"
+                                    style="width: 30px; min-width: 30px; max-width: 30px; left: -1px; height: 31px;">
+                                    <input type="checkbox" name="checkbox" class="selectBtn"
+                                           data-id="b3a93a036a154464acef7479cfa48384"
+                                           value="b3a93a036a154464acef7479cfa48384"></td>
+                                <td class="rowIndex fixedLeftColumn"
+                                    style="left: 28px; width: 50px; min-width: 50px; max-width: 50px; height: 31px;">13
+                                </td>
+                                <td class=" fixedLeftColumn"
+                                    style="left: 77px; width: 350px; min-width: 350px; max-width: 350px; height: 31px;">
+                                    <a href="/line/detail/b3a93a036a154464acef7479cfa48384" title="图片插件测试"
+                                       paras="LineGuid">图片插件测试</a></td>
+                                <td title="ALGWY20170330018"
+                                    style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 140px; min-width: 140px; max-width: 140px; height: 30px; vertical-align: top;">
+                                    ALGWY20170330018
+                                </td>
+                                <td title="国外游"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 100px; min-width: 100px; max-width: 100px; height: 30px; vertical-align: top;">
+                                    国外游
+                                </td>
+                                <td title="出境游"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 100px; min-width: 100px; max-width: 100px; height: 30px; vertical-align: top;">
+                                    出境游
+                                </td>
+                                <td title="包团"
+                                    style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    包团
+                                </td>
+                                <td title="广州"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    广州
+                                </td>
+                                <td title="陈雪华"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    陈雪华
+                                </td>
+                                <td title="陈雪华"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    陈雪华
+                                </td>
+                                <td title="17-03-29" format="yy-MM-dd"
+                                    style="text-align: center; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    17-03-29
+                                </td>
+                                <td title="false"
+                                    style="text-align: center; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    false
+                                </td>
+                                <td title="正常" class=" fixedRightColumn"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; right: 100px; width: 80px; min-width: 80px; max-width: 80px; height: 31px;">
+                                    正常
+                                </td>
+                                <td class=" fixedRightColumn"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; right: 0px; width: 100px; min-width: 100px; max-width: 100px; border-left: 0px; height: 31px;">
+                                    <a class=" clickEvent btn btn-sm" href="javascript:void(0);" title="上架">上架</a><a
+                                        class=" clickEvent btn btn-sm" href="javascript:void(0);" title="下架">下架</a></td>
+                            </tr>
+                            <tr data-id="66dbfea83e0a47e292968bec245b6877">
+                                <td class="checkboxField fixedLeftColumn"
+                                    style="width: 30px; min-width: 30px; max-width: 30px; left: -1px; height: 31px;">
+                                    <input type="checkbox" name="checkbox" class="selectBtn"
+                                           data-id="66dbfea83e0a47e292968bec245b6877"
+                                           value="66dbfea83e0a47e292968bec245b6877"></td>
+                                <td class="rowIndex fixedLeftColumn"
+                                    style="left: 28px; width: 50px; min-width: 50px; max-width: 50px; height: 31px;">14
+                                </td>
+                                <td class=" fixedLeftColumn"
+                                    style="left: 77px; width: 350px; min-width: 350px; max-width: 350px; height: 31px;">
+                                    <a href="/line/detail/66dbfea83e0a47e292968bec245b6877" title="图片插件测试"
+                                       paras="LineGuid">图片插件测试</a></td>
+                                <td title="ALGWY20170330016"
+                                    style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 140px; min-width: 140px; max-width: 140px; height: 30px; vertical-align: top;">
+                                    ALGWY20170330016
+                                </td>
+                                <td title="国外游"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 100px; min-width: 100px; max-width: 100px; height: 30px; vertical-align: top;">
+                                    国外游
+                                </td>
+                                <td title="出境游"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 100px; min-width: 100px; max-width: 100px; height: 30px; vertical-align: top;">
+                                    出境游
+                                </td>
+                                <td title="包团"
+                                    style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    包团
+                                </td>
+                                <td title="广州"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    广州
+                                </td>
+                                <td title="陈雪华"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    陈雪华
+                                </td>
+                                <td title="陈雪华"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    陈雪华
+                                </td>
+                                <td title="17-03-29" format="yy-MM-dd"
+                                    style="text-align: center; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    17-03-29
+                                </td>
+                                <td title="false"
+                                    style="text-align: center; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    false
+                                </td>
+                                <td title="正常" class=" fixedRightColumn"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; right: 100px; width: 80px; min-width: 80px; max-width: 80px; height: 31px;">
+                                    正常
+                                </td>
+                                <td class=" fixedRightColumn"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; right: 0px; width: 100px; min-width: 100px; max-width: 100px; border-left: 0px; height: 31px;">
+                                    <a class=" clickEvent btn btn-sm" href="javascript:void(0);" title="上架">上架</a><a
+                                        class=" clickEvent btn btn-sm" href="javascript:void(0);" title="下架">下架</a></td>
+                            </tr>
+                            <tr data-id="e3e57e0fb09d417494254b608da3a6c8">
+                                <td class="checkboxField fixedLeftColumn"
+                                    style="width: 30px; min-width: 30px; max-width: 30px; left: -1px; height: 31px;">
+                                    <input type="checkbox" name="checkbox" class="selectBtn"
+                                           data-id="e3e57e0fb09d417494254b608da3a6c8"
+                                           value="e3e57e0fb09d417494254b608da3a6c8"></td>
+                                <td class="rowIndex fixedLeftColumn"
+                                    style="left: 28px; width: 50px; min-width: 50px; max-width: 50px; height: 31px;">15
+                                </td>
+                                <td class=" fixedLeftColumn"
+                                    style="left: 77px; width: 350px; min-width: 350px; max-width: 350px; height: 31px;">
+                                    <a href="/line/detail/e3e57e0fb09d417494254b608da3a6c8" title="图片插件测试"
+                                       paras="LineGuid">图片插件测试</a></td>
+                                <td title="ALGWY20170330020"
+                                    style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 140px; min-width: 140px; max-width: 140px; height: 30px; vertical-align: top;">
+                                    ALGWY20170330020
+                                </td>
+                                <td title="国外游"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 100px; min-width: 100px; max-width: 100px; height: 30px; vertical-align: top;">
+                                    国外游
+                                </td>
+                                <td title="出境游"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 100px; min-width: 100px; max-width: 100px; height: 30px; vertical-align: top;">
+                                    出境游
+                                </td>
+                                <td title="包团"
+                                    style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    包团
+                                </td>
+                                <td title="广州"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    广州
+                                </td>
+                                <td title="陈雪华"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    陈雪华
+                                </td>
+                                <td title="陈雪华"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    陈雪华
+                                </td>
+                                <td title="17-03-29" format="yy-MM-dd"
+                                    style="text-align: center; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    17-03-29
+                                </td>
+                                <td title="false"
+                                    style="text-align: center; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    false
+                                </td>
+                                <td title="正常" class=" fixedRightColumn"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; right: 100px; width: 80px; min-width: 80px; max-width: 80px; height: 31px;">
+                                    正常
+                                </td>
+                                <td class=" fixedRightColumn"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; right: 0px; width: 100px; min-width: 100px; max-width: 100px; border-left: 0px; height: 31px;">
+                                    <a class=" clickEvent btn btn-sm" href="javascript:void(0);" title="上架">上架</a><a
+                                        class=" clickEvent btn btn-sm" href="javascript:void(0);" title="下架">下架</a></td>
+                            </tr>
+                            <tr data-id="64c5137d9d4547598854b2d377c473cd">
+                                <td class="checkboxField fixedLeftColumn"
+                                    style="width: 30px; min-width: 30px; max-width: 30px; left: -1px; height: 31px;">
+                                    <input type="checkbox" name="checkbox" class="selectBtn"
+                                           data-id="64c5137d9d4547598854b2d377c473cd"
+                                           value="64c5137d9d4547598854b2d377c473cd"></td>
+                                <td class="rowIndex fixedLeftColumn"
+                                    style="left: 28px; width: 50px; min-width: 50px; max-width: 50px; height: 31px;">16
+                                </td>
+                                <td class=" fixedLeftColumn"
+                                    style="left: 77px; width: 350px; min-width: 350px; max-width: 350px; height: 31px;">
+                                    <a href="/line/detail/64c5137d9d4547598854b2d377c473cd" title="图片插件测试"
+                                       paras="LineGuid">图片插件测试</a></td>
+                                <td title="ALGWY20170330015"
+                                    style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 140px; min-width: 140px; max-width: 140px; height: 30px; vertical-align: top;">
+                                    ALGWY20170330015
+                                </td>
+                                <td title="国外游"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 100px; min-width: 100px; max-width: 100px; height: 30px; vertical-align: top;">
+                                    国外游
+                                </td>
+                                <td title="出境游"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 100px; min-width: 100px; max-width: 100px; height: 30px; vertical-align: top;">
+                                    出境游
+                                </td>
+                                <td title="包团"
+                                    style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    包团
+                                </td>
+                                <td title="广州"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    广州
+                                </td>
+                                <td title="陈雪华"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    陈雪华
+                                </td>
+                                <td title="陈雪华"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    陈雪华
+                                </td>
+                                <td title="17-03-29" format="yy-MM-dd"
+                                    style="text-align: center; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    17-03-29
+                                </td>
+                                <td title="false"
+                                    style="text-align: center; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    false
+                                </td>
+                                <td title="正常" class=" fixedRightColumn"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; right: 100px; width: 80px; min-width: 80px; max-width: 80px; height: 31px;">
+                                    正常
+                                </td>
+                                <td class=" fixedRightColumn"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; right: 0px; width: 100px; min-width: 100px; max-width: 100px; border-left: 0px; height: 31px;">
+                                    <a class=" clickEvent btn btn-sm" href="javascript:void(0);" title="上架">上架</a><a
+                                        class=" clickEvent btn btn-sm" href="javascript:void(0);" title="下架">下架</a></td>
+                            </tr>
+                            <tr data-id="3ef901df4cbc4e7bb4d8ae89d003a728">
+                                <td class="checkboxField fixedLeftColumn"
+                                    style="width: 30px; min-width: 30px; max-width: 30px; left: -1px; height: 45px;">
+                                    <input type="checkbox" name="checkbox" class="selectBtn"
+                                           data-id="3ef901df4cbc4e7bb4d8ae89d003a728"
+                                           value="3ef901df4cbc4e7bb4d8ae89d003a728"></td>
+                                <td class="rowIndex fixedLeftColumn"
+                                    style="left: 28px; width: 50px; min-width: 50px; max-width: 50px; height: 45px;">17
+                                </td>
+                                <td class=" fixedLeftColumn"
+                                    style="left: 77px; width: 350px; min-width: 350px; max-width: 350px; height: 45px;">
+                                    <a href="/line/detail/3ef901df4cbc4e7bb4d8ae89d003a728"
+                                       title="测试编辑线路获取渠道商报错【测试编码生成器流水跳号问题】6" paras="LineGuid">测试编辑线路获取渠道商报错【测试编码生成器流水跳号问题】6</a>
+                                </td>
+                                <td title="ALAC20170324006"
+                                    style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 140px; min-width: 140px; max-width: 140px; height: 44px; vertical-align: top;">
+                                    ALAC20170324006
+                                </td>
+                                <td title="产品中心"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 100px; min-width: 100px; max-width: 100px; height: 44px; vertical-align: top;">
+                                    产品中心
+                                </td>
+                                <td title="出境游"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 100px; min-width: 100px; max-width: 100px; height: 44px; vertical-align: top;">
+                                    出境游
+                                </td>
+                                <td title="散拼-不拼"
+                                    style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 44px; vertical-align: top;">
+                                    散拼-不拼
+                                </td>
+                                <td title="阳朔"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 44px; vertical-align: top;">
+                                    阳朔
+                                </td>
+                                <td title="陈雪华"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 44px; vertical-align: top;">
+                                    陈雪华
+                                </td>
+                                <td title="陈雪华"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 44px; vertical-align: top;">
+                                    陈雪华
+                                </td>
+                                <td title="17-03-29" format="yy-MM-dd"
+                                    style="text-align: center; width: 80px; min-width: 80px; max-width: 80px; height: 44px; vertical-align: top;">
+                                    17-03-29
+                                </td>
+                                <td title="false"
+                                    style="text-align: center; width: 80px; min-width: 80px; max-width: 80px; height: 44px; vertical-align: top;">
+                                    false
+                                </td>
+                                <td title="正常" class=" fixedRightColumn"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; right: 100px; width: 80px; min-width: 80px; max-width: 80px; height: 45px;">
+                                    正常
+                                </td>
+                                <td class=" fixedRightColumn"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; right: 0px; width: 100px; min-width: 100px; max-width: 100px; border-left: 0px; height: 45px;">
+                                    <a class=" clickEvent btn btn-sm" href="javascript:void(0);" title="上架">上架</a><a
+                                        class=" clickEvent btn btn-sm" href="javascript:void(0);" title="下架">下架</a></td>
+                            </tr>
+                            <tr data-id="677283b852aa4876b077787c1bb51112">
+                                <td class="checkboxField fixedLeftColumn"
+                                    style="width: 30px; min-width: 30px; max-width: 30px; left: -1px; height: 31px;">
+                                    <input type="checkbox" name="checkbox" class="selectBtn"
+                                           data-id="677283b852aa4876b077787c1bb51112"
+                                           value="677283b852aa4876b077787c1bb51112"></td>
+                                <td class="rowIndex fixedLeftColumn"
+                                    style="left: 28px; width: 50px; min-width: 50px; max-width: 50px; height: 31px;">18
+                                </td>
+                                <td class=" fixedLeftColumn"
+                                    style="left: 77px; width: 350px; min-width: 350px; max-width: 350px; height: 31px;">
+                                    <a href="/line/detail/677283b852aa4876b077787c1bb51112" title="图片插件测试"
+                                       paras="LineGuid">图片插件测试</a></td>
+                                <td title="ALGWY20170327012"
+                                    style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 140px; min-width: 140px; max-width: 140px; height: 30px; vertical-align: top;">
+                                    ALGWY20170327012
+                                </td>
+                                <td title="国外游"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 100px; min-width: 100px; max-width: 100px; height: 30px; vertical-align: top;">
+                                    国外游
+                                </td>
+                                <td title="出境游"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 100px; min-width: 100px; max-width: 100px; height: 30px; vertical-align: top;">
+                                    出境游
+                                </td>
+                                <td title="包团"
+                                    style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    包团
+                                </td>
+                                <td title="广州"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    广州
+                                </td>
+                                <td title="陈雪华"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    陈雪华
+                                </td>
+                                <td title="陈雪华"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    陈雪华
+                                </td>
+                                <td title="17-03-27" format="yy-MM-dd"
+                                    style="text-align: center; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    17-03-27
+                                </td>
+                                <td title="false"
+                                    style="text-align: center; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    false
+                                </td>
+                                <td title="正常" class=" fixedRightColumn"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; right: 100px; width: 80px; min-width: 80px; max-width: 80px; height: 31px;">
+                                    正常
+                                </td>
+                                <td class=" fixedRightColumn"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; right: 0px; width: 100px; min-width: 100px; max-width: 100px; border-left: 0px; height: 31px;">
+                                    <a class=" clickEvent btn btn-sm" href="javascript:void(0);" title="上架">上架</a><a
+                                        class=" clickEvent btn btn-sm" href="javascript:void(0);" title="下架">下架</a></td>
+                            </tr>
+                            <tr data-id="2f7e8a04bf4a4bf6ad119a9a3f36bf58">
+                                <td class="checkboxField fixedLeftColumn"
+                                    style="width: 30px; min-width: 30px; max-width: 30px; left: -1px; height: 31px;">
+                                    <input type="checkbox" name="checkbox" class="selectBtn"
+                                           data-id="2f7e8a04bf4a4bf6ad119a9a3f36bf58"
+                                           value="2f7e8a04bf4a4bf6ad119a9a3f36bf58"></td>
+                                <td class="rowIndex fixedLeftColumn"
+                                    style="left: 28px; width: 50px; min-width: 50px; max-width: 50px; height: 31px;">19
+                                </td>
+                                <td class=" fixedLeftColumn"
+                                    style="left: 77px; width: 350px; min-width: 350px; max-width: 350px; height: 31px;">
+                                    <a href="/line/detail/2f7e8a04bf4a4bf6ad119a9a3f36bf58" title="图片插件测试"
+                                       paras="LineGuid">图片插件测试</a></td>
+                                <td title="ALGWY20170327011"
+                                    style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 140px; min-width: 140px; max-width: 140px; height: 30px; vertical-align: top;">
+                                    ALGWY20170327011
+                                </td>
+                                <td title="国外游"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 100px; min-width: 100px; max-width: 100px; height: 30px; vertical-align: top;">
+                                    国外游
+                                </td>
+                                <td title="出境游"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 100px; min-width: 100px; max-width: 100px; height: 30px; vertical-align: top;">
+                                    出境游
+                                </td>
+                                <td title="包团"
+                                    style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    包团
+                                </td>
+                                <td title="广州"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    广州
+                                </td>
+                                <td title="陈雪华"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    陈雪华
+                                </td>
+                                <td title="陈雪华"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    陈雪华
+                                </td>
+                                <td title="17-03-27" format="yy-MM-dd"
+                                    style="text-align: center; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    17-03-27
+                                </td>
+                                <td title="false"
+                                    style="text-align: center; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    false
+                                </td>
+                                <td title="正常" class=" fixedRightColumn"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; right: 100px; width: 80px; min-width: 80px; max-width: 80px; height: 31px;">
+                                    正常
+                                </td>
+                                <td class=" fixedRightColumn"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; right: 0px; width: 100px; min-width: 100px; max-width: 100px; border-left: 0px; height: 31px;">
+                                    <a class=" clickEvent btn btn-sm" href="javascript:void(0);" title="上架">上架</a><a
+                                        class=" clickEvent btn btn-sm" href="javascript:void(0);" title="下架">下架</a></td>
+                            </tr>
+                            <tr data-id="037bc1920edf44e996d78db9c48f3e46">
+                                <td class="checkboxField fixedLeftColumn"
+                                    style="width: 30px; min-width: 30px; max-width: 30px; left: -1px; height: 31px;">
+                                    <input type="checkbox" name="checkbox" class="selectBtn"
+                                           data-id="037bc1920edf44e996d78db9c48f3e46"
+                                           value="037bc1920edf44e996d78db9c48f3e46"></td>
+                                <td class="rowIndex fixedLeftColumn"
+                                    style="left: 28px; width: 50px; min-width: 50px; max-width: 50px; height: 31px;">20
+                                </td>
+                                <td class=" fixedLeftColumn"
+                                    style="left: 77px; width: 350px; min-width: 350px; max-width: 350px; height: 31px;">
+                                    <a href="/line/detail/037bc1920edf44e996d78db9c48f3e46" title="图片插件测试"
+                                       paras="LineGuid">图片插件测试</a></td>
+                                <td title="ALGWY20170327010"
+                                    style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 140px; min-width: 140px; max-width: 140px; height: 30px; vertical-align: top;">
+                                    ALGWY20170327010
+                                </td>
+                                <td title="国外游"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 100px; min-width: 100px; max-width: 100px; height: 30px; vertical-align: top;">
+                                    国外游
+                                </td>
+                                <td title="出境游"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 100px; min-width: 100px; max-width: 100px; height: 30px; vertical-align: top;">
+                                    出境游
+                                </td>
+                                <td title="包团"
+                                    style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    包团
+                                </td>
+                                <td title="广州"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    广州
+                                </td>
+                                <td title="陈雪华"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    陈雪华
+                                </td>
+                                <td title="陈雪华"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    陈雪华
+                                </td>
+                                <td title="17-03-27" format="yy-MM-dd"
+                                    style="text-align: center; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    17-03-27
+                                </td>
+                                <td title="false"
+                                    style="text-align: center; width: 80px; min-width: 80px; max-width: 80px; height: 30px; vertical-align: top;">
+                                    false
+                                </td>
+                                <td title="正常" class=" fixedRightColumn"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; right: 100px; width: 80px; min-width: 80px; max-width: 80px; height: 31px;">
+                                    正常
+                                </td>
+                                <td class=" fixedRightColumn"
+                                    style="text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; right: 0px; width: 100px; min-width: 100px; max-width: 100px; border-left: 0px; height: 31px;">
+                                    <a class=" clickEvent btn btn-sm" href="javascript:void(0);" title="上架">上架</a><a
+                                        class=" clickEvent btn btn-sm" href="javascript:void(0);" title="下架">下架</a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div data-id="scrollDiv_y" class="y-bar"
+                     style="overflow-x: hidden; overflow-y: auto; position: absolute; top: 0px; width: 10px; right: -1px; padding-bottom: 0px; bottom: 0px; z-index: 1;">
+                    <div style="width: 10px; height: 616px;"></div>
+                </div>
+            </div>
+            <div data-id="tableDiv-footer" class="tb-foot-wrapper" style="width: auto; position: relative;">
+                <div style="width: auto; overflow: hidden; padding-left: 426px; margin-right: 177px;">
+                    <table border="0" class="table table-bordered">
+                        <tfoot>
+                        <tr>
+                            <td class="checkboxField fixedLeftColumn"
+                                style="width: 30px; min-width: 30px; max-width: 30px; left: -1px; height: 28px;"></td>
+                            <td class="rowIndex fixedLeftColumn"
+                                style="left: 28px; width: 50px; min-width: 50px; max-width: 50px; height: 28px;">
+                                &nbsp;</td>
+                            <td class=" fixedLeftColumn"
+                                style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; left: 77px; width: 350px; min-width: 350px; max-width: 350px; height: 28px;">
+                                合计
+                            </td>
+                            <td style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 140px; min-width: 140px; max-width: 140px; height: 27px; vertical-align: top;">
+                                &nbsp;</td>
+                            <td style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 100px; min-width: 100px; max-width: 100px; height: 27px; vertical-align: top;">
+                                &nbsp;</td>
+                            <td style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 100px; min-width: 100px; max-width: 100px; height: 27px; vertical-align: top;">
+                                &nbsp;</td>
+                            <td style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 27px; vertical-align: top;">
+                                &nbsp;</td>
+                            <td style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 27px; vertical-align: top;">
+                                &nbsp;</td>
+                            <td style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 27px; vertical-align: top;">
+                                1
+                            </td>
+                            <td style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 27px; vertical-align: top;">
+                                &nbsp;</td>
+                            <td style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 27px; vertical-align: top;">
+                                &nbsp;</td>
+                            <td style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 27px; vertical-align: top;">
+                                &nbsp;</td>
+                            <td class=" fixedRightColumn"
+                                style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; right: 100px; width: 80px; min-width: 80px; max-width: 80px; height: 28px;">
+                                &nbsp;</td>
+                            <td class=" fixedRightColumn"
+                                style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; right: 0px; width: 100px; min-width: 100px; max-width: 100px; border-left: 0px; height: 28px;">
+                                &nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td class="checkboxField fixedLeftColumn"
+                                style="width: 30px; min-width: 30px; max-width: 30px; left: -1px; height: 28px;"></td>
+                            <td class="rowIndex fixedLeftColumn"
+                                style="left: 28px; width: 50px; min-width: 50px; max-width: 50px; height: 28px;">
+                                &nbsp;</td>
+                            <td class=" fixedLeftColumn"
+                                style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; left: 77px; width: 350px; min-width: 350px; max-width: 350px; height: 28px;">
+                                合计
+                            </td>
+                            <td style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 140px; min-width: 140px; max-width: 140px; height: 27px; vertical-align: top;">
+                                &nbsp;</td>
+                            <td style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 100px; min-width: 100px; max-width: 100px; height: 27px; vertical-align: top;">
+                                &nbsp;</td>
+                            <td style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 100px; min-width: 100px; max-width: 100px; height: 27px; vertical-align: top;">
+                                &nbsp;</td>
+                            <td style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 27px; vertical-align: top;">
+                                &nbsp;</td>
+                            <td style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 27px; vertical-align: top;">
+                                &nbsp;</td>
+                            <td style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 27px; vertical-align: top;">
+                                1
+                            </td>
+                            <td style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 27px; vertical-align: top;">
+                                &nbsp;</td>
+                            <td style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 27px; vertical-align: top;">
+                                &nbsp;</td>
+                            <td style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: 80px; min-width: 80px; max-width: 80px; height: 27px; vertical-align: top;">
+                                &nbsp;</td>
+                            <td class=" fixedRightColumn"
+                                style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; right: 100px; width: 80px; min-width: 80px; max-width: 80px; height: 28px;">
+                                &nbsp;</td>
+                            <td class=" fixedRightColumn"
+                                style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; right: 0px; width: 100px; min-width: 100px; max-width: 100px; border-left: 0px; height: 28px;">
+                                &nbsp;</td>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="x-bar" style="overflow: hidden; top: -4px; width: 100%; position: absolute; z-index: 2;">
+                    <div style="margin-left: 426px; margin-right: 175px; width: auto; overflow-x: auto; overflow-y: hidden;">
+                        <div style="width: 821px; height: 1px;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="upage">
+                <div class="page-content" style="display: block;">共<label class="total-record">64</label>条记录<span><em
+                        class="page-current">1</em>/<em class="page-count">4</em></span><span
+                        class="page-item prev disable" title="上一页">&lt;</span><span class="page-item-container"><span
+                        class="page-item current" data-page="1" title="第1页">1</span><span class="page-item"
+                                                                                          data-page="2"
+                                                                                          title="第2页">2</span><span
+                        class="page-item" data-page="3" title="第3页">3</span><span class="page-item" data-page="4"
+                                                                                  title="第4页">4</span></span><span
+                        class="page-item next" title="下一页">&gt;</span></div>
+                <div class="nodata" style="display: none;">暂无更多数据了</div>
+                <div class="loading" style="text-align: center; display: none;">正在加载...</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="calTable" style="width: 100%;">
+</div>
+</body>
+</html>
+<script>
+    // $("#unfixTable").uTable("getRadioSelectedModel"); 获取选项
+    // $("#unfixTable").uTable("setRadioSelectedModel",17636); 设置主键为选上
+
+    /* var next = {
+     17644: [17645, 17646],
+     17645: [17613, 17611]
+     };
+
+     $('#calTable').uTable({
+     parseItems: function (response) {
+     return response.Result.Items;
+     },
+     parseTotalCount: function (response) {
+     return response.Result.TotalCount;
+     },
+     changeRadioButton: function (evt, model) {
+     $("#testTable").uTable("setCheckedItems", next[String(model.Id)]);
+     },
+
+     TableColumns: [
+     {
+     head: "群名", tag: "GroupName", dataType: "string",
+     addClass: "td",
+     fixColumn: true,
+     width: 120,
+     nowrap: false,
+     sort: 1,
+     sortTag: 'CreateCnFullName'
+     },
+     {
+     head: "创建姓名", tag: "CreateCnFullName", dataType: "string",
+     fixColumn: true,
+     width: 82,
+     align: 'center'
+     },
+     {
+     head: "标题", tag: "Title", dataType: "string", width: 200
+     },
+     {
+     head: "创建时间", tag: "CreateDateTime", dataType: "string", width: 200
+     },
+     {
+     head: "创建时间", tag: "CreateDateTime", dataType: "string", width: 200
+     },
+     {
+     head: "创建时间", tag: "CreateDateTime", dataType: "string", width: 200,
+
+     // 非链接时的参数列表
+     func: function (val, model, cell, row) {
+     console.log(row);
+     return val;
+     }
+     },
+     {
+     head: "单价", tag: "money", format: "money", width: 200
+     },
+     {
+     isLink: true,
+     url: "/SaleOrder/Detail/{0}", target: "_blank",
+     paras: "Id",
+     head: "创建时间", tag: "CreateDateTime", dataType: "string", width: 200,
+
+     // 链接时的参数列表
+     func: function (model, val, cell, link, row) {
+     console.log(row);
+     return val;
+     }
+     },
+
+     {
+     head: '操作', isOper: true, isLink: true,
+     linkList: [
+     {
+     img: "http://download.easyicon.net/png/1087327/128/",
+     target: "_blank",
+     func: function (model) {
+     return model.Id;
+     },
+     clickEvent: "aaa"
+     },
+     {
+     target: "_blank", "text": "选中项",
+     clickEvent: function (evt, model) {
+     $("#testTable").uTable("setCheckedItems", next[String(model.Id)]);
+     }
+     }
+     ],
+     fixColumn: true,
+     width: 120,
+     addClass: 'td_btn',
+     align: 'center'
+     }],
+
+     beforePageChange: function (evt, model) {
+     console.log(model);
+     },
+     Url: 'data.json',
+     TableClass: 'table border-table',
+     OtherStyle: '',
+     Border: 0,
+     ShowCheckBox: false,
+     ShowRadioBox: true,
+     ShowRowIndex: true,
+     ShowPager: true,
+     PageSize: 5,
+     KeyField: 'Id',
+     TableBodyHeight: '500',
+     //  FixedColumn: false
+     });*/
+
+    /*   window.aaa = function () {
+     alert("aaa");
+     };
+     var opt = {
+     parseItems: function (response) {
+     return response.Result.Items;
+     },
+     parseTotalCount: function (response) {
+     return response.Result.TotalCount;
+     },
+     changeCheckboxButton: function (evt, model) {
+     console.log(evt, model);
+     },
+     TableColumns: [
+     {
+     head: "编号", tag: "TemplateEnum", dataType: "string",
+     fixColumn: true,
+     width: 120,
+     nowrap: false,
+     headAlign: 'center'
+     },
+     {
+     head: "名称",
+     isLink: true,
+     url: "http://www.baidu.com",
+     tag: "ProjectName", dataType: "string",
+     target: "_blank",
+     fixColumn: true,
+     width: 190,
+     align: 'left',
+     nowrap: false
+     },
+     {
+     head: "自定义类别", tag: "DefineType", dataType: "string",
+     align: 'center'
+     },
+     {
+     head: "线路类别", tag: "LineType", dataType: "string",
+     align: 'center',
+     },
+     {
+     head: "团队类型", tag: "TeamType", dataType: "string",
+     align: 'center',
+     },
+     {
+     head: "出发地", tag: "StrDepartures", dataType: "string",
+     align: 'center',
+     },
+     {
+     head: "创建人", tag: "CreateUserName", dataType: "string",
+     align: 'center',
+     },
+     {
+     head: "更新人", tag: "UpdateUserName", dataType: "string",
+     align: 'center',
+     },
+     {
+     head: "更新时间", tag: "UpdateDateTime", dataType: "string",
+     align: 'center',
+     nowrap: false,
+     width:150,
+     },
+     {
+     head: "状态", tag: "Status", dataType: "string",
+     align: 'center',
+     width:120,
+     fixColumn: true,
+     },
+     {
+     head: '操作',
+     isLink: true,
+     text: '发布产品',
+     align:'right',
+     clickEvent: function (item) {
+     console.log(item);
+     return false;
+     },
+     cssClass:"link1",
+     width:150,
+     fixColumn: true
+     }],
+
+     fetchDataOption: {
+     beforeSend: function () {
+     console.log("beforeSend");
+     },
+     complete: function (XMLHttpRequest, textStatus) {
+     console.log("complete");
+     },
+     success: function (data, textStatus) {
+     console.log(data);
+     }
+     },
+     Url: 'data2.json',
+     TableID: 'test1',
+     TableClass: 'table table-bordered',
+     OtherStyle: '',
+     Border: 1,
+     ShowCheckBox: true,
+     ShowRadioBox: false,
+     ShowRowIndex: true,
+     ShowPager: true,
+     PageSize: 5,
+     DefaultSortField: 'Id',
+     DefaultSortWay: 'Desc',
+     KeyField: 'Id',
+     TableBodyHeight: '400'
+     };
+
+     $("#testTable").uTable(opt);
+     setTimeout(function(){
+     $("#testTable").show();
+     },3000);*/
+
+    //  $("#unfixTable").uTable(opt);
+</script>

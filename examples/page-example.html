@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../dist/release/jquery.utable.css" rel="stylesheet" />
+    <!--<script src="../node_modules/requirejs/require.js"></script>
+    <script src="../src/js/require-config.js"></script>-->
+
+    <script src="../vendor/jquery/dist/jquery.js"></script>
+    <script src="../dist/release/jquery.page.js"></script>
+</head>
+<body>
+<div>
+    <div id="page" style="width: 100%;">
+    </div>
+    <button id="next">下一页</button>
+</div>
+<script>
+
+    $("#page").page({
+        pageIndex:1,
+        pageSize:20,
+        changePage:function(page){
+            console.log(page);
+        },
+        totalCount:200
+    });
+
+    //   $("#page").page("nextPage") 下一页
+    //   $("#page").page("prevPage") 上一页
+    //   $("#page").page("nextPage") 下一页
+    //   $("#page").page("prevPage") 上一页
+</script>
+</body>
+</html>

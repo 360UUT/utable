@@ -1,0 +1,22 @@
+{
+  "Success": true,
+  "Result": {
+    "TotalCount": 10,
+    "Items": [
+      {
+        "Id": 17644,
+        "TemplateEnum": "GZ1703150001",
+        "TemplateName": "澳门+香港5日自由行(4钻)·澳门喜来登+香港皇悦系列酒店",
+        "DefineType": "产品中心",
+        "LineType": "国内游",
+        "TeamType": "包团",
+        "StrDepartures": "北京-大兴",
+        "CreateUserName": "miniluo",
+        "UpdateUserName": "miniluo",
+        "UpdateDateTime": "2017-03-15 16:26",
+        "Status": "草稿"
+      }
+    ]
+  },
+  "Error": null
+}

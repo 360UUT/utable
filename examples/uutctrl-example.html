@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link href="http://cdn.inner.com/static/common/js/plugins/zui/css/zui.css" rel="stylesheet"/>
+    <script src="http://cdn.inner.com/static/common/js/plugins/jquery/jquery-2.2.3.min.js"></script>
+    <link href="../dist/release/jquery.utable.css" rel="stylesheet"/>
+    <script src="../dist/release/jquery.utable.js"></script>
+</head>
+<body style="padding: 800px 0;">
+<div style="padding-left: 20px;">
+    <div id="testTable" style="width: 100%;display: none;">
+    </div>
+</div>
+
+</body>
+</html>
+<script>
+    var opt = {
+        LoadDataType: 0,
+        TableColumns: [
+            {
+                head: "名称", tag: "ProductLineName", dataType: "string",
+                isLink: true,
+                url: "/line/detail/{0}",
+                paras: "LineGuid",
+                nowrap: false,
+                fixColumn: true,
+                width: 350
+            },
+            {
+                head: "编号", tag: "Code", dataType: "string",
+                width: 140
+            },
+            {
+                head: "自定义类别", tag: "BusinessCategory", dataType: "string",
+                width: 100,
+                align: 'center'
+            },
+            {
+                head: "线路类别", tag: "LineCategory", dataType: "string",
+                width: 100,
+                align: 'center'
+            },
+            {
+                head: "团队类型", tag: "TeamType", dataType: "string",
+                width: 80
+            },
+            {
+                head: "出发地", tag: "StrDepartures", dataType: "string",
+                width: 80,
+                align: 'center'
+            },
+            {
+                head: "创建人", tag: "CreateUser", dataType: "string",
+                width: 80,
+                align: 'center'
+            },
+            {
+                head: "更新人", tag: "ModifyUser", dataType: "string",
+                width: 80,
+                align: 'center'
+            },
+            {
+                head: "更新时间", tag: "ModifyDatetime", dataType: "string",
+                parse: function (item, value) {
+                    return value;
+                },
+                nowrap: false,
+                width: 80,
+                align: 'center',
+                format: 'yy-MM-dd'
+            },
+            {
+                head: "上下架", tag: "IsShelve", dataType: "string",
+                nowrap: false,
+                width: 80,
+                align: 'center'
+            },
+            {
+                head: "状态", tag: "State",
+
+                format: "enum",
+                enums: {
+                    "Well": {
+                        value: 1,
+                        text: "正常"
+                    }
+                },
+
+                fixColumn: true,
+                width: 80,
+                align: 'center'
+            },
+            {
+                head: '操作', isLink: true,
+                isOper: true,
+                linkList: [
+                    {
+                        cssClass: "btn btn-sm",
+                        text: "上架",
+                        isOper: true,
+                        clickEvent: function (event, item) {
+
+                        }
+                    }, {
+                        cssClass: "btn btn-sm",
+                        text: "下架",
+                        isOper: true,
+                        clickEvent: function (event, item) {
+
+                        }
+                    }],
+                width: 100,
+                align: 'center',
+                fixColumn: true
+            }],
+
+        afterLoad: function () {
+
+        },
+
+        Url: 'data2.json',
+        TableID: 'tblLine',
+        TableClass: 'table table-bordered',
+        OtherStyle: '',
+        Border: 1,
+        ShowCheckBox: true,
+        ShowRadioBox: false,
+        ShowRowIndex: true,
+        ShowPager: true,
+        PageSize: 20,
+        DefaultSortField: 'ModifyDatetime',
+        DefaultSortWay: 'Desc',
+        KeyField: 'LineGuid',
+        TableBodyHeight: '340',
+        FooterOptions: {
+            Rows: [
+                {
+                    RowType: "合计",
+                    RowTypeNameIndex: 2,
+                    Cells: [
+                        {
+                            CellIndex: 8,
+                            // data 为请求回来的数据, cell为当前单元格Dom
+                            Func: function (data, cell) {
+                                return 1;
+                            }
+                        }
+                    ]
+                },
+                {
+                    RowType: "合计",
+                    RowTypeNameIndex: 2,
+                    Cells: [
+                        {
+                            CellIndex: 8,
+                            // data 为请求回来的数据, cell为当前单元格Dom
+                            Func: function (data, cell) {
+                                return 1;
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    };
+    $("#testTable").uTable(opt);
+    //setTimeout(function(){
+    $("#testTable").show();
+    //  },200);
+
+    //  $("#testTable").uTable(opt);
+</script>
