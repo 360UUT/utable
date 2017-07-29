@@ -1,0 +1,256 @@
+@charset "utf-8";
+
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th
+
+.utable .tb-head-wrapper>.table>thead>tr>th {
+    vertical-align: bottom;
+    border-bottom: 0px solid #ddd;
+}
+
+/*列表样式*/
+.utable >.table>tbody>tr>td,
+.utable >.table>tbody>tr>th,
+.utable >.table>tfoot>tr>td,
+.utable >.table>tfoot>tr>th,
+.utable >.table>thead>tr>td,
+.utable >.table>thead>tr>th{
+    font-size: 12px;
+    line-height:34px;
+    min-height: 34px;
+   /* vertical-align: top;*/
+    color: #666;
+    font-weight: normal;
+    border-bottom: 0;
+}
+
+/*tr斑马线*/
+.utable .tb-body-wrapper table tr:nth-child(2n+1){
+    background-color: #fff; 
+}
+
+.utable .tb-body-wrapper table tr:nth-child(2n+1) .fixedLeftColumn,
+.utable .tb-body-wrapper table tr:nth-child(2n+1) .fixedRightColumn{
+    background-color: #fff; 
+}
+.utable .tb-body-wrapper table tr:nth-child(2n){
+    background-color: #f2f2f2; 
+}
+
+.utable .tb-body-wrapper table tr:nth-child(2n) .fixedLeftColumn,
+.utable .tb-body-wrapper table tr:nth-child(2n) .fixedRightColumn{
+    background-color: #f2f2f2; 
+}
+.utable .tb-body-wrapper{
+    border-left: 1px solid #ccc;
+}
+.utable .table {
+    /*table-layout: fixed;*/
+    border: 0;
+    margin: 0;
+    width: auto;
+    font-size: 12px;
+    color:#666;
+}
+.utable .table.fixTable{
+    table-layout: fixed;
+    width: 100%;
+}
+
+.utable  .table-bordered > thead > tr > td,.utable  .table-bordered > thead > tr > th {
+    border-width: 1px;
+    border-bottom: 1px;
+}
+
+
+.utable .table th.fixedLeftColumn {
+
+}
+.utable .table th,.utable  .table th.fixedLeftColumn,.utable  .table td,.utable  .table td.fixedLeftColumn,.utable  .table th.fixedRightColumn,.utable  .table td.fixedRightColumn {
+   /* white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;*/
+    /*height: 38px;*/
+    line-height:1.5;
+    font-weight: normal;
+    padding: 4px;
+    word-break: break-all;
+}
+
+.utable .table th.fixedLeftColumn,.utable  .table td.fixedLeftColumn,.utable  .table th.fixedRightColumn,.utable  .table td.fixedRightColumn {
+    position: absolute;
+    margin-bottom: 0px;
+    border-bottom-width: 0px;
+    background: #ffffff;
+   /* height: 100%;*/
+}
+
+/*表头灰色*/
+.utable .table th,.utable .table th.fixedLeftColumn,.utable .table th.fixedRightColumn {
+    background-color: #ccc;
+    /*line-height: 1.4;*/
+    font-size: 12px;
+    line-height: 1.5;
+}
+。utable .sort-link{
+    color: #000000;
+}
+
+.utable .tb-body-wrapper table tr:last-child td.fixedLeftColumn,.utable  .tb-body-wrapper table tr:last-child td.fixedRightColumn {
+    border-bottom-width: 1px;
+}
+
+.utable .table th.fixedLeftColumn, .utable .table td.fixedLeftColumn {
+    left: 0;
+}
+
+.utable .table th.fixedRightColumn, .utable .table td.fixedRightColumn {
+    right: 0;
+}
+.utable .table tr:last-child td.fixedLeftColumn ,.utable .table tr:last-child td.fixedRightColumn{
+    /*height: 39px;*/
+}
+.utable .img-btn{
+    width: 22px;
+}
+    /*checkbox*/
+.utable .checkboxField,.utable .checkboxFieldTh{
+    text-align: center;
+}
+.utable input[type=checkbox],.utable input[type=radio]{
+    width:12px;
+    height: 12px;
+    border-radius: 1px;
+    margin:0;
+}
+.utable .rowIndex {
+    text-align: center;
+}
+
+/*滚动区域边框加深*/
+/*.utable .table .fixedLeftColumn:last-child{
+    border-right: 2px solid #000;
+}
+.utable .table .fixedRightColumn:first-child{
+    border-left: 2px solid #000;
+}*/
+
+.utable .fixedRightColumn a{
+    font-size: 12px;
+    color: #666;
+    border-radius: 2px;
+   /* background-color: #fff;*/
+    display: inline-block;
+    text-align: center;
+    border: 1px solid #ccc;
+    padding: 0 6px;
+    /*height: 26px;*/
+    line-height: 1.5;
+}
+
+/*link*/
+.utable .fixedRightColumn a:hover,
+.utable .fixedRightColumn a:focus,
+.utable td.td_link a:hover,
+.utable td.td_link a:focus,
+.utable td.td_link a:active{
+    text-decoration: none;
+}
+
+.utable td.td_link a{
+    color:#0099cc;
+}
+
+.utable td.td_link a:hover,.utable td.td_link a:focus,.utable td.td_link a:active{
+    color:#ff0000;
+}
+
+.utable .rowSelected,.utable .rowSelected .fixedRightColumn,.utable .rowSelected .fixedLeftColumn,.utable .rowSelected a{
+    background: #ccc !important;
+    color: #fff;
+}
+/*表脚*/
+.utable .tb-foot-wrapper{
+
+}
+.utable .tb-foot-wrapper tr:last-child td{
+    border-bottom: 1px solid #ccc;
+}
+/*滚动条*/
+::-webkit-scrollbar-thumb, ::-webkit-scrollbar-thumb:hover, ::-webkit-scrollbar-thumb:active {
+    background-color: #ddd;
+    -webkit-border-radius: 4px;
+}
+::-webkit-scrollbar {
+    width: 8px;
+    height: 10px;
+    background-color: #F5F5F5;
+}
+.y-bar{
+    border-right: 1px solid #ccc;
+   /* border-bottom: 1px solid #ccc;*/
+}
+
+/* 分页控件 */
+.utable .upage {
+    text-align: right;
+    margin-top: 12px;
+    font-size: 12px;
+}
+
+.utable .upage .page-item-container {
+    /*margin: 0 4px;*/
+    height: 20px;
+}
+
+.utable .upage .page-item,
+.utable .upage .page-item-container .page-item {
+    border: 1px solid #ccc;
+    /*height: 24px;*/
+    
+    display: inline-block;
+    text-align: center;
+    margin-left:8px;
+    cursor: pointer;
+    /*padding: 0 4px;*/
+    width:20px;
+    height: 20px;
+    line-height: 1.67;
+}
+.utable .upage .page-item:last-child {
+    margin-left: 0;
+}
+
+.utable .upage .page-total {
+    /*color: red;*/
+    padding: 2px;
+}
+
+.utable .upage .page-size {
+
+}
+
+.utable .upage .page-item.current {
+    /*border: 1px solid #ccc;
+    height: 24px;
+    display: inline-block;
+    text-align: center;
+    margin: 2px 2px;*/
+    color: #fff;
+    background-color: #30b329;
+}
+
+.utable .upage .page-item.next {
+
+}
+
+.utable .upage .page-item.prev {
+
+}
+
+.utable .upage .page-item.disable {
+    cursor: not-allowed;
+}
+
+.utable .upage .nodata{
+    text-align: center;
+}

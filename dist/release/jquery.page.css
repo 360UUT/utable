@@ -1,0 +1,55 @@
+@charset "utf-8";
+
+/* 分页控件 */
+ .utable .upage {
+    text-align: right;
+    margin-top: 20px;
+}
+
+ .utable .upage .page-item-container {
+    /*margin: 0 4px;*/
+    height: 20px;
+}
+
+ .utable .upage .page-item,
+ .utable .upage .page-item-container .page-item {
+    border: 1px solid #666;
+    border-radius: 2px;
+    width:  20px;
+    height: 20px;
+    line-height: 1.67;
+    display: inline-block;
+    text-align: center;
+    padding:  0;
+    margin-left: 8px;
+    cursor: pointer;
+   
+}
+.utable .upage .page-item:last-child {
+
+}
+ .utable .upage .page-total {
+    /*color: red;*/
+    padding: 2px;
+}
+
+ .utable .upage .page-size {
+
+}
+
+ .utable .upage .page-item.current {
+    color: #fff;
+    background-color: #30B329;
+}
+
+ .utable .upage .page-item.next {
+
+}
+
+ .utable .upage .page-item.prev {
+
+}
+
+ .utable .upage .page-item.disable {
+    cursor: not-allowed;
+}

@@ -1,0 +1,9 @@
+@charset "utf-8";
+/*额外的样式写在这里*/
+table tr .td_btn a{
+    border:1px solid #666;
+    margin-right: 4px;
+}
+table tr .td_btn a:last-child{
+    margin-right: 0px;
+}
