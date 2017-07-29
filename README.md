@@ -1,5 +1,3 @@
-        <div class="markdown-body">
-
 jquery.utable.js 说明文档
 
 <table>
@@ -945,5 +943,3 @@ rowTag  tr 标签对象
                  }
              ] 
 </pre>
-
-        </div>
