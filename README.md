@@ -29,15 +29,37 @@ jquery.utable.js 说明文档
     创建一个data.json文件作为请求的数据接口，文件包含的有以下数据，其中TotalCount代表数据总数和，Items为要显示的数据序列，序列项必须保持属性、类型一致且具有唯一键代表数据项。
 
 <table><tr><td>
-{
 
+{
     "TotalCount": 500,
 
     "Items": [
 
-     {
+      {
 
-       ]
+        "Id": 17644,
+
+        "Content": "公告",
+
+        "Title": "发布了新公告！",
+
+        "MessageId": "6b848943a802488c80372a1f187ca61c",
+
+      },
+
+      {
+
+        "Id": 17645,
+
+        "Content": "公告",
+
+        "Title": "发布了新公告！2",
+
+        "MessageId": "6b848943a802488c80372a1f187ca61c"
+
+      }
+
+    ]
 
   }
 </td></tr></table> 
@@ -59,23 +81,24 @@ jquery.utable.js 说明文档
 [<svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg>](#35%E5%88%9D%E5%A7%8B%E5%8C%96utable)<a name="user-content-35utable"></a><span>3.5初始化utable</span>
 
 <table><tr><td>
-<pre> $("#utable1").uTable({
-     Url: 'data.json',
-     parseItems: function (response) {
-         return response.Result.Items;
-     },
-     parseTotalCount: function (response) {
-         return response.Result.TotalCount;
-     },
-     TableColumns: [
-       {
-],
-     TableClass: 'table table-bordered',
-     PageSize: 5,
-     DefaultSortField: 'Id',
-     DefaultSortWay: 'Desc',
-     KeyField: 'Id',
-   }); 
+<pre>$("#utable1").uTable({
+    Url: 'data.json',
+    parseItems: function (response) {
+        return response.Result.Items;
+    },
+    parseTotalCount: function (response) {
+        return response.Result.TotalCount;
+    },
+    TableColumns: [
+        {
+            head: "内容", tag: " Content "
+        }],
+    TableClass: 'table table-bordered',
+    PageSize: 5,
+    DefaultSortField: 'Id',
+    DefaultSortWay: 'Desc',
+    KeyField: 'Id',
+  }); 
 </pre>
 </td></tr></table>
 
